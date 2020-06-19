@@ -1,0 +1,83 @@
+public class SortTestHelper {
+    //生成有N个元素的随机数组，数组范围为[RangeL, RangeR]
+    public static int[] generateRandomArray(int n, int RangeL, int RangeR) {
+        assert RangeL <= RangeR;
+        int[] arr = new int[n];
+        for (int i = 0; i < n; i++) {
+            arr[i] = (int) (Math.random() * (RangeR - RangeL + 1) + RangeL);
+        }
+        return arr;
+    }
+    public static <T> void swap(T[] arr, int i, int j) {
+        T tmp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = tmp;
+    }
+
+    public static <T extends Comparable<T>> void selection_sort(T[] arr) {
+        int len = arr.length;
+        for (int i = 0; i < len; i++) {
+            int min_idx = i;
+            for (int j = i + 1; j < len; j++) {
+                if (arr[j].compareTo(arr[min_idx]) < 0 ) {
+                    min_idx = j;
+                }
+            }
+            swap(arr, i, min_idx);
+        }
+    }
+    
+
+    public static void main(String[] args) {
+        int[] arr = generateRandomArray(5, 20, 10);
+        for (int num : arr){
+            System.out.print(num + " ");
+        }
+        System.out.println();
+        Integer[] arr1 = new Integer[arr.length];
+        for (int i = 0; i < arr.length; i++) {
+            arr1[i] = new Integer(arr[i]);
+        }
+        selection_sort(arr1);
+        for (int num : arr1) {
+            System.out.print(num + " ");
+        }
+        System.out.println();
+        Float[] arr2 = {2.0f, 4.3f, 1.8f, 9.4f, 0.224f, 3.24f};
+        selection_sort(arr2);
+        for (float num : arr2) {
+            System.out.print(num + " ");
+        }
+        Student s1 = new Student("Tim", 99);
+        Student s2 = new Student("Tom", 98);
+        Student s3 = new Student("Tony", 60);
+        Student[] s = {s1, s2, s3};
+        selection_sort(s);
+        for (Student ss : s) {
+            System.out.print(ss.score + " " + ss.name + ";");
+        }
+    }
+}
+
+
+public class Student implements Comparable{
+    public String name;
+    public int score;
+
+    public Student(String name, int score) {
+        this.name = name;
+        this.score = score;
+    }
+
+    public String toString() {
+        return "\tStudent score:" + score + " name:" + name + "\r";
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Student s = (Student) o;
+        if (this.score < s.score) return -1;
+        else if (this.score > s.score) return 1;
+        else return 0;
+    }
+}
